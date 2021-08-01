@@ -1,4 +1,4 @@
-package dev.brainstorm.moviecatelogmongodb.repositories;
+package dev.brainstorm.moviecatelogmongodb.mongorepositories;
 
 import dev.brainstorm.moviecatelogmongodb.models.Person;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Gender;

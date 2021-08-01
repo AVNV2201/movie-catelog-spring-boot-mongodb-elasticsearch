@@ -2,14 +2,12 @@ package dev.brainstorm.moviecatelogmongodb.services;
 
 import dev.brainstorm.moviecatelogmongodb.models.Person;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Gender;
-import dev.brainstorm.moviecatelogmongodb.repositories.PersonRepository;
+import dev.brainstorm.moviecatelogmongodb.mongorepositories.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 public class PersonServiceImpl implements PersonService {
