@@ -1,7 +1,7 @@
-# Movie Catelog using MongoDB
+# Movie Catelog using MongoDB and ElasticSearch
 
-This Spring Boot Maven project is build with the purpose of learning Spring Boot and Spring Data MongoDB  
-The Web App throws REST APIs to maintain the database.
+This Spring Boot Maven project is build with the purpose of learning Spring Boot with Spring Data MongoDB and Spring Data ElasticSearch     
+The Web App throws REST APIs to maintain and querry the database.
 
 ## Contents
 
@@ -12,10 +12,12 @@ The Web App throws REST APIs to maintain the database.
    2. [Crew](#crew-pojo)
    3. [Person](#person-pojo)
 4. [API Endpoints](#api-endpoints)
-   1. [Person](#person)
+   1. [Movie](#movie)
+   2. [Person](#person)
 
 ## Requirements
 - MongoDB
+- ElasticSearch
 - Maven
 - JDK
 - IDE( IntelliJ )
@@ -30,6 +32,11 @@ The Maven dependencies used for this Spring Boot project are -
 ## Models 
 Models / POJO are - 
 ### Movie POJO
+- id: String
+- name: String
+- description: String
+- genre: enum
+- releaseDate: Date
 ### Crew POJO
 ### Person POJO
 - name: String
@@ -37,6 +44,14 @@ Models / POJO are -
 - id: String
 
 ## API Endpoints
+### Movie
+Method | Endpoint | Description
+-------|----------|-------------
+POST | /movie | Add a movie
+GET | /movie | Get all movies 
+GET | /movie?{genre} | get all movies of specific genre
+GET | /movie/search?{q} | Search for movie with searchTerm q
+
 ### Person
 Method | Endpoint | Description
 -------|----------|-------------

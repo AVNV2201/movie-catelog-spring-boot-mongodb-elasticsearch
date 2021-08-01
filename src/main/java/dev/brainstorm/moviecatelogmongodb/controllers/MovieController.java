@@ -1,6 +1,7 @@
 package dev.brainstorm.moviecatelogmongodb.controllers;
 
 import dev.brainstorm.moviecatelogmongodb.models.Movie;
+import dev.brainstorm.moviecatelogmongodb.models.enums.Genre;
 import dev.brainstorm.moviecatelogmongodb.services.MovieService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,30 @@ public class MovieController {
     }
 
     @GetMapping("/movie")
-    public ResponseEntity<List<Movie>> getAllMovies(@PathParam("name") String name){
+    public ResponseEntity<List<Movie>> getAllMovies(@PathParam("genre") Genre genre){
         try {
-            List<Movie> movies = movieService.getAllMovies(name);
+            List<Movie> movies = movieService.getAllMovies(genre);
             if(movies.isEmpty()){
                 log.info("No movies found");
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
+            log.info("{} movies found", movies.size());
+            return new ResponseEntity<>(movies, HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.toString());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/movie/search")
+    public ResponseEntity<List<Movie>> searchMovies(@PathParam("q") String q){
+        try {
+            List<Movie> movies = movieService.searchMovies(q);
+            if(movies.isEmpty()){
+                log.info("No movies found");
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
+            log.info("{} movies found", movies.size());
             return new ResponseEntity<>(movies, HttpStatus.OK);
         } catch (Exception e){
             log.error(e.toString());
