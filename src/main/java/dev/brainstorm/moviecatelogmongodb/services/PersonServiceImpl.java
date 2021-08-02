@@ -57,4 +57,23 @@ public class PersonServiceImpl implements PersonService {
     public Person addPerson(Person person) {
         return personRepository.save(person);
     }
+
+    @Override
+    public Person updatePerson(String id, Person person) {
+        Optional<Person> personOptional = personRepository.findById(id);
+
+        if(personOptional.isPresent()){
+            Person _person = personOptional.get();
+            _person.setName(person.getName());
+            _person.setGender(person.getGender());
+            return personRepository.save(_person);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void deletePerson(String id) {
+        personRepository.deleteById(id);
+    }
 }

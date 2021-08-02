@@ -1,7 +1,9 @@
 # Movie Catelog using MongoDB and ElasticSearch
 
 This Spring Boot Maven project is build with the purpose of learning Spring Boot with Spring Data MongoDB and Spring Data ElasticSearch     
-The Web App throws REST APIs to maintain and querry the database.
+The Web App throws REST APIs to maintain and querry the database.   
+- Movie data will be stored in Elasticsearch
+- Crew and Person data will be store in MongoDB
 
 ## Contents
 
@@ -14,6 +16,7 @@ The Web App throws REST APIs to maintain and querry the database.
 4. [API Endpoints](#api-endpoints)
    1. [Movie](#movie)
    2. [Person](#person)
+   3. [Crew](#crew)
 
 ## Requirements
 - MongoDB
@@ -64,6 +67,8 @@ POST | /person | Add a person
 GET | /person/{id} | Get a person by its id
 GET | /person | Get all persons
 GET | /person?{gender}&{name} | Get list of persons using these optional querries
+PATCH | /person/{id} | Update person info by id and payload
+DELETE | /person/{id} | Delete a person by id
 
 ### Crew
 Method | Endpoint | Description

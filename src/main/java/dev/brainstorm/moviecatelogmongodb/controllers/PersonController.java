@@ -1,5 +1,6 @@
 package dev.brainstorm.moviecatelogmongodb.controllers;
 
+import dev.brainstorm.moviecatelogmongodb.models.Crew;
 import dev.brainstorm.moviecatelogmongodb.models.Person;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Gender;
 import dev.brainstorm.moviecatelogmongodb.services.PersonService;
@@ -64,6 +65,36 @@ public class PersonController {
         } catch (Exception e){
             log.error(e.toString());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/person/{id}")
+    public ResponseEntity<Person> updatePerson(@PathVariable("id") String id, @RequestBody Person person){
+        try {
+            Person _person = personService.updatePerson(id, person);
+
+            if(_person == null){
+                log.error("Unable to update Person with id: {}", id);
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            log.info("Updated Person with id: {}", id);
+            return new ResponseEntity<>(_person, HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.toString());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/person/{id}")
+    public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") String id){
+        try {
+            personService.deletePerson(id);
+            log.info("Person deleted with id: {}", id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.toString());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
