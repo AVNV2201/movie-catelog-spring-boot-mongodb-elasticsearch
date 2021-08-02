@@ -57,8 +57,12 @@ Method | Endpoint | Description
 -------|----------|-------------
 POST | /movie | Add a movie
 GET | /movie | Get all movies 
+GET | /movie/{id} | Get Movie by id
 GET | /movie?{genre} | get all movies of specific genre
 GET | /movie/search?{q} | Search for movie with searchTerm q
+PATCH | /movie/{id} | Update movie info with id and payload
+DELETE | /movie/{id}?cascade=true | Delete a movie by id and all the crew of that movie will also be deleted
+DELETE | /movie/{id}?cascade=false | Delete a movie by id, the crew will stay in DB
 
 ### Person
 Method | Endpoint | Description
