@@ -38,6 +38,11 @@ Models / POJO are -
 - genre: enum
 - releaseDate: Date
 ### Crew POJO
+- id: String
+- movieId: String
+- personId: String
+- characterName: String
+- role: enum
 ### Person POJO
 - name: String
 - gender: enum
@@ -59,3 +64,11 @@ POST | /person | Add a person
 GET | /person/{id} | Get a person by its id
 GET | /person | Get all persons
 GET | /person?{gender}&{name} | Get list of persons using these optional querries
+
+### Crew
+Method | Endpoint | Description
+-------|----------|-------------
+POST | /crew | Add a crew
+GET | /crew/{role} | Get list of crew of particular role
+GET | /crew?{movieId} | Get list of crew of particular movie
+GET | /crew?{personId} | Get list of crew(all the roles played by a person)
