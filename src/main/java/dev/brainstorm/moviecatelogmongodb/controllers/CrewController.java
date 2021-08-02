@@ -50,7 +50,7 @@ public class CrewController {
         }
     }
 
-    @GetMapping("/crew/{role}")
+    @GetMapping("/crew/role/{role}")
     public ResponseEntity<List<Crew>> getCrewByRole(@PathVariable("role") Role role){
         try {
             if(role == null){
@@ -73,6 +73,23 @@ public class CrewController {
         }
     }
 
+    @GetMapping("/crew/{id}")
+    public ResponseEntity<Crew> getCrewById(@PathVariable("id") String id){
+        try {
+            Crew crew = crewService.getCrewById(id);
+
+            if(crew == null){
+                log.error("Unable to find crew with id: {}", id);
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(crew, HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.toString());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/crew")
     public ResponseEntity<Crew> addCrew(@RequestBody Crew crew){
         try {
@@ -87,6 +104,35 @@ public class CrewController {
         } catch (Exception e){
             log.error(e.toString());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/crew/{id}")
+    public ResponseEntity<Crew> updateCrew(@PathVariable("id") String id, @RequestBody Crew crew){
+        try {
+            Crew _crew = crewService.updateCrew(id, crew);
+
+            if(_crew == null){
+                log.error("Unable to update crew with id: {}", id);
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            log.info("Updated Crew with id: {}", id);
+            return new ResponseEntity<>(_crew, HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.toString());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/crew/{id}")
+    public ResponseEntity<HttpStatus> deleteCrew(@PathVariable("id") String id){
+        try {
+            crewService.deleteCrew(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.toString());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

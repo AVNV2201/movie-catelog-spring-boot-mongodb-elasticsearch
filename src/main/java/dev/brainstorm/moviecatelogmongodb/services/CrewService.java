@@ -42,4 +42,21 @@ public class CrewService {
     public Crew addCrew(Crew crew){
         return crewRepository.save(crew);
     }
+
+    public Crew updateCrew(String id, Crew crew){
+        Optional<Crew> crewData = crewRepository.findById(id);
+        if(crewData.isPresent()){
+            Crew _crew = crewData.get();
+            _crew.setMovieId(crew.getMovieId());
+            _crew.setPersonId(crew.getPersonId());
+            _crew.setRole(crew.getRole());
+            _crew.setCharacterName(crew.getCharacterName());
+            return crewRepository.save(_crew);
+        }
+        return null;
+    }
+
+    public void deleteCrew(String id){
+        crewRepository.deleteById(id);
+    }
 }

@@ -69,6 +69,9 @@ GET | /person?{gender}&{name} | Get list of persons using these optional querrie
 Method | Endpoint | Description
 -------|----------|-------------
 POST | /crew | Add a crew
-GET | /crew/{role} | Get list of crew of particular role
+GET | /crew/{id} | Get a crew by id
+GET | /crew/role/{role} | Get list of crew of particular role
 GET | /crew?{movieId} | Get list of crew of particular movie
 GET | /crew?{personId} | Get list of crew(all the roles played by a person)
+PATCH | /crew/{id} | Update a crew by id and payload
+DELETE | /crew/{id} | Delete a crew by id
