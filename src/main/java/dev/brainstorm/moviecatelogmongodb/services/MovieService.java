@@ -1,11 +1,10 @@
 package dev.brainstorm.moviecatelogmongodb.services;
 
+import dev.brainstorm.moviecatelogmongodb.config.RabbitMQConfig;
 import dev.brainstorm.moviecatelogmongodb.esrepositories.MovieRepository;
-import dev.brainstorm.moviecatelogmongodb.models.Crew;
 import dev.brainstorm.moviecatelogmongodb.models.Movie;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Genre;
-import dev.brainstorm.moviecatelogmongodb.mongorepositories.CrewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,11 +14,11 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    private final CrewRepository crewRepository;
+    private final RabbitTemplate rabbitTemplate;
 
-    public MovieService(MovieRepository movieRepository, CrewRepository crewRepository) {
+    public MovieService(MovieRepository movieRepository, RabbitTemplate rabbitTemplate) {
         this.movieRepository = movieRepository;
-        this.crewRepository = crewRepository;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     public Movie addMovie(Movie movie){
@@ -64,8 +63,7 @@ public class MovieService {
 
     public void deleteMovie(String id, boolean cascadeDeleteCrew){
         if(cascadeDeleteCrew){
-            List<Crew> crew = crewRepository.findByMovieId(id);
-            crewRepository.deleteAll(crew);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, id);
         }
         movieRepository.deleteById(id);
     }

@@ -24,13 +24,16 @@ The Web App throws REST APIs to maintain and querry the database.
 - Maven
 - JDK
 - IDE( IntelliJ )
+- RabbitMQ Broker
 
 ## Maven Dependencies
 The Maven dependencies used for this Spring Boot project are - 
-- Spring Web
-- Spring Data MongoDB
-- Lombok
-- Log4j2
+- spring-boot-starter-web
+- spring-boot-starter-data-mongodb
+- spring-boot-starter-data-elasticsearch
+- spring-boot-starter-log4j2
+- spring-boot-starter-amqp
+- lombok
 
 ## Models 
 Models / POJO are - 
@@ -61,7 +64,7 @@ GET | /movie/{id} | Get Movie by id
 GET | /movie?{genre} | get all movies of specific genre
 GET | /movie/search?{q} | Search for movie with searchTerm q
 PATCH | /movie/{id} | Update movie info with id and payload
-DELETE | /movie/{id}?cascade=true | Delete a movie by id and all the crew of that movie will also be deleted
+DELETE | /movie/{id}?cascade=true | Delete a movie by id and using rabbitMQ, all the crew of that movie will also be deleted 
 DELETE | /movie/{id}?cascade=false | Delete a movie by id, the crew will stay in DB
 
 ### Person

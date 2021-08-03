@@ -1,9 +1,11 @@
 package dev.brainstorm.moviecatelogmongodb.services;
 
+import dev.brainstorm.moviecatelogmongodb.config.RabbitMQConfig;
 import dev.brainstorm.moviecatelogmongodb.models.Crew;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Role;
 import dev.brainstorm.moviecatelogmongodb.mongorepositories.CrewRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,5 +60,12 @@ public class CrewService {
 
     public void deleteCrew(String id){
         crewRepository.deleteById(id);
+    }
+
+    @RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
+    public void deleteCrewByMovieId(String movieId){
+        List<Crew> crew = crewRepository.findByMovieId(movieId);
+        crewRepository.deleteAll(crew);
+        log.info("All crew are deleted with movieId: {}", movieId);
     }
 }
