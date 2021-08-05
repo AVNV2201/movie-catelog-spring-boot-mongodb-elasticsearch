@@ -3,6 +3,7 @@ package dev.brainstorm.moviecatelogmongodb.services;
 import dev.brainstorm.moviecatelogmongodb.models.Person;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Gender;
 import dev.brainstorm.moviecatelogmongodb.mongorepositories.PersonRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,11 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonServiceImpl implements PersonService {
+@Profile("repo")
+public class PersonServiceUsingRepository implements PersonService {
 
     private final PersonRepository personRepository;
 
-    public PersonServiceImpl(PersonRepository personRepository) {
+    public PersonServiceUsingRepository(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
