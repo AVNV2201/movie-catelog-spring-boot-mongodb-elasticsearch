@@ -34,6 +34,8 @@ The Maven dependencies used for this Spring Boot project are -
 - spring-boot-starter-log4j2
 - spring-boot-starter-amqp
 - lombok
+- springfox-swagger2
+- springfox-swagger-ui
 
 ## Models 
 Models / POJO are - 

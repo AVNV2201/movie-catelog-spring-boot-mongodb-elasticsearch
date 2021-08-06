@@ -3,16 +3,20 @@ package dev.brainstorm.moviecatelogmongodb.controllers;
 import dev.brainstorm.moviecatelogmongodb.models.Movie;
 import dev.brainstorm.moviecatelogmongodb.models.enums.Genre;
 import dev.brainstorm.moviecatelogmongodb.services.MovieService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @Slf4j
+@Api(value = "My controller for Movies")
 public class MovieController {
 
     private final MovieService movieService;
@@ -21,7 +25,8 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/movie")
+    @GetMapping(value = "/movie",produces = "application/json")
+    @ApiOperation(value = "Get list of movies of a genre or get all movies")
     public ResponseEntity<List<Movie>> getAllMovies(@PathParam("genre") Genre genre){
         try {
             List<Movie> movies = movieService.getAllMovies(genre);
@@ -37,7 +42,8 @@ public class MovieController {
         }
     }
 
-    @GetMapping("/movie/search")
+    @GetMapping(value = "/movie/search", produces = "application/json")
+    @ApiOperation(value = "Search for a movie")
     public ResponseEntity<List<Movie>> searchMovies(@PathParam("q") String q){
         try {
             List<Movie> movies = movieService.searchMovies(q);
@@ -53,7 +59,8 @@ public class MovieController {
         }
     }
 
-    @GetMapping("/movie/{id}")
+    @GetMapping(value = "/movie/{id}", produces = "application/json")
+    @ApiOperation(value = "Get a Movie by id", response = Movie.class)
     public ResponseEntity<Movie> getMovieById(@PathVariable("id") String id){
         try {
             Movie movie = movieService.getMovieById(id);
@@ -68,7 +75,8 @@ public class MovieController {
         }
     }
 
-    @PostMapping("/movie")
+    @PostMapping(value = "/movie", produces = "application/json")
+    @ApiOperation(value = "Add a new movie", response = Movie.class)
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie){
         try {
             Movie _movie = movieService.addMovie(movie);
@@ -83,7 +91,8 @@ public class MovieController {
         }
     }
 
-    @PatchMapping("/movie/{id}")
+    @PatchMapping(value = "/movie/{id}", produces = "application/json")
+    @ApiOperation(value = "Update info of a movie", response = Movie.class)
     public ResponseEntity<Movie> updateMovie(@PathVariable("id") String id, @RequestBody Movie movie){
         try {
             Movie _movie = movieService.updateMovie(id, movie);
@@ -102,6 +111,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/movie/{id}")
+    @ApiOperation(value = "Delete a movie by its id")
     public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") String id,@PathParam("cascade") boolean cascade){
         try {
             movieService.deleteMovie(id, cascade);
